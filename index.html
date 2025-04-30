@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Подбор университетов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {background-color: #f1f1f1;}
+    </style>
+</head>
+<body>
+    <h1>Подбор университетов</h1>
+    <form method="post">
+        Ваш GPA: <input type="text" name="gpa" required>
+        Балл IELTS: <input type="text" name="ielts" required>
+        Балл SAT: <input type="text" name="sat" required>
+        Ваш бюджет ($): <input type="text" name="budget" required>
+        
+        Специальность:
+        <select name="major" required>
+            {% for major in majors %}
+                <option value="{{ major }}">{{ major }}</option>
+            {% endfor %}
+        </select>
+
+        Язык обучения:
+        <select name="language" required>
+            {% for lang in languages %}
+                <option value="{{ lang }}">{{ lang }}</option>
+            {% endfor %}
+        </select>
+
+        Климат:
+        <select name="avg_temp" required>
+            <option value="холодный">Холодный</option>
+            <option value="умеренный">Умеренный</option>
+            <option value="тёплый">Тёплый</option>
+        </select>
+
+        <input type="submit" value="Подобрать университеты">
+    </form>
+
+    {% if universities %}
+        <h2>Подходящие университеты:</h2>
+        <table>
+            <tr>
+                <th>Университет</th>
+                <th>Страна</th>
+                <th>QS Рейтинг</th>
+                <th>Описание</th>
+            </tr>
+            {% for uni in universities %}
+            <tr>
+                <td>{{ uni['university_name'] }}</td>
+                <td>{{ uni['country'] }}</td>
+                <td>{{ uni['qs_rank'] }}</td>
+                <td>{{ uni['description'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
